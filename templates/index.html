@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+	<h1> The Weather Forecast </h1>
+
+	{%for forecast in soup.find_all(True, {'class':['forecast-label', 'forecast-text']})%}
+	
+		<p>{{forecast.text}}</p>
+
+		
+	{% endfor %}
+</body>
+</html>

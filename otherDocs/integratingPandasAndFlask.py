@@ -1,0 +1,67 @@
+import requests
+page = requests.get("https://forecast.weather.gov/MapClick.php?lat=44.9375&lon=-93.1406#.W-3YlpNKjp4")
+import pandas as pd
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(page.content, 'html.parser')
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+
+@app.route('/')
+@app.route('/find_forecasts')
+def find_forecasts():
+	return render_template('weather_viz.html', soup=soup)
+
+
+
+
+
+seven_day = soup.find(id="seven-day-forecast")
+forecast_items = seven_day.find_all(class_="tombstone-container")
+tonight = forecast_items[0]
+# print(tonight.prettify())
+# def find_forecasts():
+# 	return render_template('index.html', soup=soup)
+
+
+period = tonight.find(class_="period-name").get_text()
+short_desc = tonight.find(class_="short-desc").get_text()
+temp = tonight.find(class_="temp").get_text()
+
+print(period)
+print(short_desc)
+print(temp)
+
+
+img = tonight.find("img")
+desc = img['title']
+
+print(desc)
+
+period_tags = seven_day.select(".tombstone-container .period-name")
+periods = [pt.get_text() for pt in period_tags]
+print(periods)
+
+
+short_descs = [sd.get_text() for sd in seven_day.select(".tombstone-container .short-desc")]
+temps = [t.get_text() for t in seven_day.select(".tombstone-container .temp")]
+descs = [d["title"] for d in seven_day.select(".tombstone-container img")]
+
+print(short_descs)
+print(temps)
+print(descs)
+
+weather = pd.DataFrame({
+        "period": periods, 
+        "short_desc": short_descs, 
+        "temp": temps, 
+        "desc":descs
+    })
+print(weather)
+
+
+
+if __name__ == '__main__':
+	app.run(debug=True)
+
