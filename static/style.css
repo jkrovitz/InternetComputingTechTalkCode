@@ -1,7 +1,39 @@
+body{
+	margin: .5in .5in .5in .5in;
+}
+
+
+
 h1{
 	font-weight: bold; 
+	 font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
 .forecast-label{
 	font-weight: bold;
+}
+
+
+
+#weather-table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#weather-table td, #weather-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#weather-table tr:nth-child(even){background-color: #eeeeee;}
+
+/*#weather-table tr:hover {background-color: #ddd;}*/
+
+#weather-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #000000;
+    color: white;
 }

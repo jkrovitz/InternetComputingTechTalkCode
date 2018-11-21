@@ -4,9 +4,10 @@ from tinydb import TinyDB, Query
 import urllib3
 import xlsxwriter
 
+document_title = input("Please title for your output document: ")
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-url = 'https://elpaso.craigslist.org/search/bks?sort=date'
+url = input("Please enter a url to extract data from. \n(Note: The items must be listed under the for sale category and the url must end with ?sort=data.\n")
 total_added = 0
 
 def make_soup(url):
@@ -75,7 +76,7 @@ def make_excel(db):
     Headlines = ["Pid", "Date", "Cost", "Webpage", "Pic", "Desc", "Created Date"]
     row = 0
 
-    workbook = xlsxwriter.Workbook('book.xlsx')
+    workbook = xlsxwriter.Workbook(document_title+'.xlsx')
     worksheet = workbook.add_worksheet()
 
     worksheet.set_column(0,0, 15) # pid
